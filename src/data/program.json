@@ -1,0 +1,169 @@
+{
+  "version": 4,
+  "note": "Programa de 6 semanas definido pela cliente. A progressao nao vem do volume — igual em todas as semanas — e sim da POSTURA (deitada, sentada, em pe) e do TEMPO DE SUSTENTACAO (1,6s nas semanas 1-3, 5s nas 4-6). Os quatro tempos de cada repeticao (sobe / segura / desce / relaxa) foram medidos quadro a quadro na gravacao de referencia: 0,4 + 1,6 + 0,4 + 1,6 = 4,0s por repeticao. A pulsacao tambem foi medida: 0,15 + 0,2 + 0,15 + 0,55 = 1,05s por repeticao, ou seja um aperto curto e uma pausa longa, nao um vaivem continuo. Todo o texto aqui e original.",
+  "daysPerWeek": 7,
+  "weeks": [
+    {
+      "week": 1,
+      "posture": "lying",
+      "style": "quick",
+      "workouts": [
+        {
+          "type": "strength",
+          "series": 5,
+          "reps": 10,
+          "restSeconds": 45,
+          "contractSeconds": 0.4,
+          "holdSeconds": 1.6,
+          "releaseSeconds": 0.4,
+          "relaxSeconds": 1.6
+        },
+        {
+          "type": "pulse",
+          "series": 5,
+          "reps": 10,
+          "restSeconds": 20,
+          "contractSeconds": 0.15,
+          "holdSeconds": 0.2,
+          "releaseSeconds": 0.15,
+          "relaxSeconds": 0.55
+        }
+      ]
+    },
+    {
+      "week": 2,
+      "posture": "seated",
+      "style": "quick",
+      "workouts": [
+        {
+          "type": "strength",
+          "series": 5,
+          "reps": 10,
+          "restSeconds": 45,
+          "contractSeconds": 0.4,
+          "holdSeconds": 1.6,
+          "releaseSeconds": 0.4,
+          "relaxSeconds": 1.6
+        },
+        {
+          "type": "pulse",
+          "series": 5,
+          "reps": 10,
+          "restSeconds": 20,
+          "contractSeconds": 0.15,
+          "holdSeconds": 0.2,
+          "releaseSeconds": 0.15,
+          "relaxSeconds": 0.55
+        }
+      ]
+    },
+    {
+      "week": 3,
+      "posture": "standing",
+      "style": "quick",
+      "workouts": [
+        {
+          "type": "strength",
+          "series": 5,
+          "reps": 10,
+          "restSeconds": 45,
+          "contractSeconds": 0.4,
+          "holdSeconds": 1.6,
+          "releaseSeconds": 0.4,
+          "relaxSeconds": 1.6
+        },
+        {
+          "type": "pulse",
+          "series": 5,
+          "reps": 10,
+          "restSeconds": 20,
+          "contractSeconds": 0.15,
+          "holdSeconds": 0.2,
+          "releaseSeconds": 0.15,
+          "relaxSeconds": 0.55
+        }
+      ]
+    },
+    {
+      "week": 4,
+      "posture": "standing",
+      "style": "hold",
+      "workouts": [
+        {
+          "type": "strength",
+          "series": 5,
+          "reps": 10,
+          "restSeconds": 45,
+          "contractSeconds": 0.4,
+          "holdSeconds": 5,
+          "releaseSeconds": 0.4,
+          "relaxSeconds": 1.6
+        },
+        {
+          "type": "pulse",
+          "series": 5,
+          "reps": 10,
+          "restSeconds": 20,
+          "contractSeconds": 0.15,
+          "holdSeconds": 0.2,
+          "releaseSeconds": 0.15,
+          "relaxSeconds": 0.55
+        }
+      ]
+    },
+    {
+      "week": 5,
+      "posture": "lying",
+      "style": "hold",
+      "workouts": [
+        {
+          "type": "strength",
+          "series": 5,
+          "reps": 10,
+          "restSeconds": 45,
+          "contractSeconds": 0.4,
+          "holdSeconds": 5,
+          "releaseSeconds": 0.4,
+          "relaxSeconds": 1.6
+        },
+        {
+          "type": "pulse",
+          "series": 5,
+          "reps": 10,
+          "restSeconds": 20,
+          "contractSeconds": 0.15,
+          "holdSeconds": 0.2,
+          "releaseSeconds": 0.15,
+          "relaxSeconds": 0.55
+        }
+      ]
+    },
+    {
+      "week": 6,
+      "posture": "seated",
+      "style": "hold",
+      "workouts": [
+        {
+          "type": "strength",
+          "series": 5,
+          "reps": 10,
+          "restSeconds": 45,
+          "contractSeconds": 0.4,
+          "holdSeconds": 5,
+          "releaseSeconds": 0.4,
+          "relaxSeconds": 1.6
+        },
+        {
+          "type": "pulse",
+          "series": 5,
+          "reps": 10,
+          "restSeconds": 20,
+          "contractSeconds": 0.15,
+          "holdSeconds": 0.2,
+          "releaseSeconds": 0.15,
+          "relaxSeconds": 0.55
+        }
+      ]
+    }
+  ]
+}

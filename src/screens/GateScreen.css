@@ -1,0 +1,138 @@
+/* Tela do codigo de acesso e tela de bloqueio: as duas usam este arquivo,
+   porque sao a mesma pagina com textos diferentes. */
+
+.gate {
+  justify-content: center;
+}
+
+.gate__body {
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+  padding: calc(var(--safe-top) + 32px) 24px calc(var(--safe-bottom) + 32px);
+  text-align: center;
+}
+
+.gate__logo {
+  width: 172px;
+  height: auto;
+  margin-bottom: 22px;
+}
+
+.gate__eyebrow {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.gate__title {
+  margin-top: 8px;
+  font-family: var(--font-serif);
+  font-size: 1.9rem;
+  font-weight: 600;
+  line-height: 1.15;
+}
+
+.gate__lede {
+  margin-top: 12px;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--ink-muted);
+}
+
+.gate__form {
+  margin-top: 26px;
+}
+
+/* Monoespacado e com as letras afastadas: o codigo e conferido caractere a
+   caractere contra um e-mail, e proporcional atrapalha justamente isso. */
+.gate__input {
+  width: 100%;
+  min-height: 58px;
+  padding: 0 16px;
+  border: 2px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--ink);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  /* 16px e o minimo que evita o Safari do iPhone dar zoom ao focar o campo. */
+  font-size: 1.06rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-align: center;
+  text-transform: uppercase;
+  transition: border-color 160ms ease;
+}
+
+/* E-mail nao e conferido caractere a caractere como um codigo: monoespacado e
+   com as letras afastadas ele fica pior de ler, e mais estreito para caber. */
+.gate__input--email {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.gate__input::placeholder {
+  color: var(--ink-faint);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+.gate__input:focus {
+  outline: none;
+  border-color: var(--coral);
+}
+
+.gate__input[aria-invalid='true'] {
+  border-color: var(--coral-deep);
+}
+
+.gate__error {
+  margin-top: 12px;
+  padding: 11px 14px;
+  border-radius: var(--radius-sm);
+  background: var(--coral-wash);
+  color: var(--coral-deep);
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.gate__cta {
+  margin-top: 16px;
+}
+
+.gate__note {
+  margin-top: 22px;
+  padding: 13px 16px;
+  border-radius: var(--radius-sm);
+  background: var(--teal-wash);
+  color: var(--ink);
+  font-size: 0.82rem;
+  line-height: 1.5;
+  opacity: 0.9;
+}
+
+.gate__help {
+  margin-top: 14px;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--ink-faint);
+}
+
+.gate__another {
+  margin-top: 14px;
+}
+
+/* Abertura: o app faz uma conferencia rapida antes de mostrar qualquer coisa.
+   Em vez de piscar uma tela vazia, fica so a marca — que e o que a splash do
+   app instalado ja estava mostrando um instante antes. */
+.gate--checking .gate__logo {
+  margin-bottom: 0;
+  opacity: 0.55;
+}

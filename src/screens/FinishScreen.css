@@ -1,0 +1,105 @@
+.finish {
+  position: relative;
+  justify-content: center;
+  overflow: hidden;
+  padding: calc(var(--safe-top) + 24px) 20px calc(var(--safe-bottom) + 24px);
+}
+
+.finish__body {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.finish__mark {
+  display: grid;
+  place-items: center;
+  width: 96px;
+  height: 96px;
+  margin-bottom: 6px;
+  border-radius: 50%;
+  background: var(--teal);
+  color: #fff;
+  box-shadow: 0 10px 30px rgb(43 147 139 / 34%);
+  animation: finish-pop 480ms cubic-bezier(0.2, 1.4, 0.4, 1);
+}
+
+@keyframes finish-pop {
+  from {
+    transform: scale(0.4);
+    opacity: 0;
+  }
+}
+
+.finish__title {
+  font-family: var(--font-serif);
+  font-size: 2.1rem;
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+.finish__subtitle {
+  font-size: 0.94rem;
+  line-height: 1.5;
+  color: var(--ink-muted);
+  max-width: 28ch;
+}
+
+.finish__stats {
+  display: flex;
+  gap: 10px;
+  margin: 16px 0 6px;
+}
+
+.finish__stats div {
+  min-width: 104px;
+  padding: 13px 16px;
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+}
+
+.finish__stats dt {
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.finish__stats dd {
+  margin: 3px 0 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.finish__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+  margin-top: 12px;
+}
+
+/* Marca d'água da flor. Atrás de tudo, junto das ondas: presença de marca sem
+   disputar leitura com o número de repetições. */
+.finish__bloom {
+  position: absolute;
+  top: 4%;
+  left: 50%;
+  width: min(78vw, 340px);
+  height: auto;
+  transform: translateX(-50%);
+  opacity: 0.09;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}

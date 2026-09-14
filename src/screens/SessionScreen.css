@@ -1,0 +1,291 @@
+/* Tela de execução. É a tela principal do produto: tudo aqui existe para ser
+   lido de relance, com o telefone a meio metro e a atenção no corpo. */
+
+.session {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  padding: calc(var(--safe-top) + 10px) 18px calc(var(--safe-bottom) + 18px);
+  background: var(--canvas);
+  overflow: hidden;
+}
+
+/*
+ * Ondas do rodape.
+ *
+ * Nao sao so fundo: elas respondem a bolinha, como agua deslocada. Medido na
+ * gravacao, no treino de forca —
+ *
+ *   bolinha em cima (APERTA)  -> ondas na posicao de repouso
+ *   bolinha embaixo (SOLTA)   -> ondas ~30px mais altas (10px em CSS)
+ *   durante a troca           -> passam do ponto ~13px e voltam
+ *
+ * Esse passar do ponto e o que da o peso de liquido. Por isso a curva da
+ * transicao ultrapassa 1 no fim (o 1.56 do cubic-bezier) em vez de so frear.
+ *
+ * O movimento vem da FASE, nao de --t: na gravacao as ondas ficam paradas
+ * durante as sustentacoes e so viajam nas trocas — e prender uma transicao
+ * CSS a uma variavel que muda todo quadro faria a transicao nunca terminar.
+ */
+.waves {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 42vh;
+  min-height: 200px;
+  pointer-events: none;
+  z-index: 0;
+
+  transform: translateY(0);
+  transition: transform 550ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  will-change: transform;
+}
+
+/* Bolinha embaixo: a agua sobe. */
+.session--release .waves,
+.session--relax .waves {
+  transform: translateY(-10px);
+}
+
+/* Descanso, preparo e fim: sem bolinha na tela, as ondas ficam em repouso —
+   e na gravacao elas estao mesmo imoveis durante o descanso. */
+
+.session > *:not(.waves) {
+  position: relative;
+  z-index: 1;
+}
+
+/* -------------------------------------------------------------------------- */
+
+.session__top {
+  display: grid;
+  grid-template-columns: 42px 1fr auto;
+  align-items: start;
+  gap: 10px;
+}
+
+/* Balãozinho com série e repetição. Fica no topo, longe do polegar, porque é
+   informação de conferência e não de toque. */
+.session__counter {
+  position: relative;
+  justify-self: center;
+  padding: 9px 18px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow: var(--shadow-card);
+  text-align: center;
+}
+
+.session__counter::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -7px;
+  width: 12px;
+  height: 12px;
+  margin-left: -6px;
+  background: var(--surface);
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  transform: rotate(45deg);
+}
+
+.session__counter-series {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--ink-faint);
+}
+
+.session__counter-reps {
+  display: block;
+  font-size: 1.05rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.session__toggles {
+  display: flex;
+  gap: 2px;
+}
+
+/* -------------------------------------------------------------------------- */
+
+.session__stage {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 18px 0;
+}
+
+.session__countdown {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  text-align: center;
+}
+
+/* O número do descanso é o maior elemento do app inteiro: precisa ser legível
+   de longe, deitada, sem óculos. Tabular para não dançar ao trocar de dígito. */
+.session__countdown-number {
+  font-size: clamp(4.5rem, 22vw, 7rem);
+  font-weight: 300;
+  line-height: 1;
+  color: var(--teal-deep);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+.session--prep .session__countdown-number {
+  color: var(--coral);
+}
+
+.session__countdown-caption {
+  font-size: 1.02rem;
+  font-weight: 600;
+  color: var(--teal-deep);
+  max-width: 16em;
+}
+
+.session--prep .session__countdown-caption {
+  color: var(--ink-muted);
+}
+
+.session__done-mark {
+  display: grid;
+  place-items: center;
+  width: 108px;
+  height: 108px;
+  border-radius: 50%;
+  background: var(--teal-wash);
+  color: var(--teal-deep);
+  font-size: 3.2rem;
+  line-height: 1;
+  animation: pop 420ms cubic-bezier(0.2, 1.4, 0.4, 1);
+}
+
+@keyframes pop {
+  from {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+
+/* Contagem da sustentação (semanas 4-6).
+   Fica no meio do palco, não junto da bolinha: durante o hold a bolinha está
+   parada no topo, e o número em cima dela ficava ilegível sobre o coral. */
+.session__hold {
+  position: absolute;
+  top: 46%;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  pointer-events: none;
+}
+
+/* No esquema verde da bolinha (opção B), o contador acompanha o estado
+   "apertando": verde profundo, o mesmo tom da bolinha parada no topo. */
+.session__hold-count {
+  font-size: 3.4rem;
+  font-weight: 300;
+  line-height: 1;
+  color: var(--teal-deep);
+  font-variant-numeric: tabular-nums;
+}
+
+.session__hold-label {
+  font-size: 0.86rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--teal);
+}
+
+.session__bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Lembrete da postura. Discreto: durante as semanas 1 a 3 é a única diferença
+   entre um treino e o outro, mas quem já está treinando não precisa de mais
+   um bloco disputando a tela. */
+.session__posture {
+  text-align: center;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+/* Aviso do iPhone: sem vibração, o som é o único retorno que existe. */
+.session__note {
+  padding: 10px 14px;
+  background: var(--coral-wash);
+  border-radius: var(--radius-sm);
+  font-size: 0.82rem;
+  line-height: 1.4;
+  color: var(--coral-deep);
+  text-align: center;
+}
+
+/* --------------------------------------------------------------------------
+   Pausado
+
+   Aparece sobre o palco, não ao lado dele. A cliente pausou, largou o telefone
+   e voltou achando que o treino tinha sumido; a pausa precisa dizer, no lugar
+   onde ela está olhando, que o lugar está guardado e ela pode ir embora.
+   -------------------------------------------------------------------------- */
+
+.session__paused {
+  position: absolute;
+  /* Sangra 18px para os lados para cobrir o padding lateral da tela, sem
+     encostar no contador nem no botão de retomar. */
+  inset: 0 -18px;
+  z-index: 6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 34px;
+  text-align: center;
+  background: color-mix(in oklab, var(--canvas) 82%, transparent);
+  backdrop-filter: blur(3px);
+  animation: paused-in 200ms ease;
+}
+
+@keyframes paused-in {
+  from {
+    opacity: 0;
+  }
+}
+
+.session__paused-title {
+  font-family: var(--font-serif);
+  font-size: 1.9rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.session__paused-body {
+  max-width: 22rem;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: var(--ink-muted);
+}

@@ -1,0 +1,38 @@
+.legal__header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 0 6px;
+}
+
+.legal__title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  margin: 0;
+}
+
+.legal__updated {
+  font-size: 0.8rem;
+  color: var(--ink-faint);
+  margin: 2px 0 14px;
+}
+
+.legal__section {
+  margin: 0 0 18px;
+}
+
+.legal__section-title {
+  font-size: 0.98rem;
+  font-weight: 700;
+  margin: 0 0 6px;
+}
+
+/* Largura de leitura: parágrafo de política em linha cheia de tela larga
+   cansa; o app é portrait, mas num tablet isso segura a medida. */
+.legal__p {
+  max-width: 62ch;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--ink-muted);
+  margin: 0 0 8px;
+}

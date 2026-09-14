@@ -1,0 +1,238 @@
+/*
+ * Tema. Todas as cores nascem aqui, dos valores de src/brand.ts.
+ * Trocar a identidade da cliente e mexer em brand.ts, nao nas telas.
+ */
+
+:root {
+  /* Coral: acao, contracao, SQUEEZE. Cor exata das petalas do logo dela. */
+  --coral: #ef6b58;
+  --coral-deep: #c95a4a;
+  --coral-soft: #fad0ca;
+  --coral-wash: #fdedeb;
+
+  /* Verde: descanso, soltura, RELEASE. Cor exata das folhas do logo. */
+  --teal: #2b938b;
+  --teal-light: #6fbdb5; /* verde claro da bolinha (opção B): --teal clareado na direção do branco */
+  --teal-deep: #237972;
+  --teal-soft: #bbdcda;
+  --teal-wash: #e6f2f1;
+
+  /* Neutros quentes. A tinta e marrom, nao cinza-azulado: sobre a areia dela
+     um preto frio fica sujo, e era isso que dava ao app o ar clinico. */
+  --ink: #3b2b26;
+  --ink-muted: #8f837d;
+  --ink-faint: #afa59e;
+  --surface: #ffffff;
+  --canvas: #f6efe8;
+  /* A areia exata do logo: ondas, reguas e fundos de apoio. */
+  --sand: #eee2d6;
+  --line: #eadfd4;
+
+  /* Réguas do trilho de treino. Verde acinzentado, mais visível que --line:
+     no app de referência elas são desenho, não borda, e precisam se ler de
+     relance a meio metro do rosto. */
+  --guide: #bbcdc2;
+
+  /* Cantos generosos: e o que separa "ficha clinica" de "produto de cuidado",
+     que foi o pedido dela ao mandar a paleta. */
+  --radius-sm: 12px;
+  --radius: 18px;
+  --radius-lg: 26px;
+  --radius-pill: 999px;
+
+  /* Sombra quente, na cor da tinta. Uma sombra cinza sobre creme lava a cor
+     do fundo e devolve o cinza que a paleta dela tirou. */
+  --shadow-card: 0 1px 2px rgb(93 62 48 / 5%), 0 8px 24px rgb(93 62 48 / 7%);
+  --shadow-raised: 0 2px 6px rgb(93 62 48 / 9%), 0 14px 36px rgb(93 62 48 / 12%);
+
+  /* Areas seguras do iPhone: sem isso o botao fixo fica sob a barra de gestos. */
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+
+  --font-sans: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+
+  color-scheme: light;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--canvas);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+
+  /* App instalado nao rola por engano nem seleciona texto ao segurar. */
+  overscroll-behavior-y: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Blocos reutilizados
+   -------------------------------------------------------------------------- */
+
+.screen {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  min-height: 100dvh;
+}
+
+.screen__body {
+  flex: 1;
+  padding: 0 20px 24px;
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 56px;
+  padding: 0 20px;
+  border-radius: var(--radius-pill);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  transition: transform 120ms ease, background-color 160ms ease, opacity 160ms ease;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn--primary {
+  background: var(--coral);
+  color: #fff;
+  box-shadow: 0 6px 18px rgb(239 107 88 / 28%);
+}
+
+.btn--primary:disabled {
+  background: var(--ink-faint);
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+.btn--ghost {
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: var(--shadow-card);
+}
+
+.btn--quiet {
+  min-height: 44px;
+  background: transparent;
+  color: var(--ink-muted);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 11px;
+  border-radius: var(--radius-pill);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.badge--teal {
+  background: var(--teal-wash);
+  color: var(--teal-deep);
+}
+
+.badge--coral {
+  background: var(--coral-wash);
+  color: var(--coral-deep);
+}
+
+.badge--muted {
+  background: var(--sand);
+  color: var(--ink-muted);
+}
+
+.icon-btn {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  color: var(--ink-muted);
+  transition: background-color 160ms ease, color 160ms ease;
+}
+
+.icon-btn--filled {
+  background: var(--coral-wash);
+  color: var(--coral);
+}
+
+.icon-btn[aria-pressed='false'] {
+  color: var(--ink-faint);
+}
+
+/* Respeita quem pediu menos animacao no sistema. A bolinha do treino continua
+   se movendo, porque ali o movimento e a propria instrucao, mas tudo que e
+   decorativo para. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8" />
+
+    <!--
+      viewport-fit=cover é o que libera as env(safe-area-inset-*) do CSS. Sem
+      isso, o botão fixo do treino fica embaixo da barra de gestos do iPhone.
+      maximum-scale=1 evita o zoom automático do iOS ao focar um controle.
+    -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover"
+    />
+
+    <title>The Squeeze Method</title>
+    <meta name="description" content="Pelvic Power &amp; Wellness" />
+    <meta name="theme-color" content="#EF6B58" />
+
+    <!-- iOS: sem estas duas, o ícone na tela inicial abre uma aba do Safari
+         em vez do app em tela cheia. -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Squeeze" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+
+    <!-- Conteudo intimo: fora dos buscadores por padrao. -->
+    <meta name="robots" content="noindex, nofollow" />
+
+    <link rel="icon" type="image/png" href="/icons/icon-192.png" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Montserrat:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

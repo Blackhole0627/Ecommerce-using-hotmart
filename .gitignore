@@ -1,0 +1,29 @@
+node_modules
+dist
+dev-dist
+.DS_Store
+*.local
+.vercel
+tsconfig.tsbuildinfo
+screenshots/
+
+# Chave privada das licencas e variaveis de ambiente. Nunca vao para o git.
+.keys/
+.env
+.env.*
+# A excecao: .env.production nao guarda segredo nenhum, so o estado da porta de
+# acesso. Fica versionado de proposito — e uma decisao que precisa ser vista na
+# revisao do codigo, nao um ajuste escondido no painel da Vercel.
+!.env.production
+
+
+# Saidas da construcao do ebook (o PDF entregue e gerado, nao versionado)
+ebook/ebook2.html
+ebook/ebook2.pdf
+ebook/manual.html
+ebook/manual.pdf
+
+.vercel
+.env*
+# Reafirma a excecao depois do .env* de cima, senao ela e engolida.
+!.env.production

@@ -1,0 +1,282 @@
+/*
+ * Palco da bolinha.
+ *
+ * Contrato com o motor: ele so escreve --t (0 embaixo, 1 em cima). Tudo aqui
+ * deriva dessa unica variavel.
+ */
+
+.ball-stage {
+  --t: 0;
+  --travel: 1; /* 1 = sobe pelo trilho (forca), 0 = pulsa no centro */
+  --pad: 46px; /* folga entre a borda do palco e o centro das posicoes extremas */
+  --travel-px: 0px; /* altura util do trilho; medida em JS, so quando o layout muda */
+
+  position: relative;
+  flex: 1;
+  width: 100%;
+  min-height: 240px;
+
+  /* O trilho nao usa a tela toda: num aparelho alto, uma bolinha percorrendo
+     700px em um segundo e rapida demais para o olho seguir. Limitar a altura
+     mantem a velocidade parecida em telas diferentes. */
+  max-height: 440px;
+}
+
+/*
+ * Rotulos das duas pontas do trilho. Acendem conforme a bolinha se aproxima.
+ *
+ * Ficam ACIMA da propria regua, nunca centrados nela: a linha tracejada
+ * cortaria o texto no meio das letras.  line-height: 1 deixa a altura do
+ * elemento igual a 1em, o que torna previsivel a folga ate a linha.
+ */
+.ball-stage__label {
+  position: absolute;
+  left: 4px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  transition: color 200ms ease, opacity 200ms ease;
+}
+
+.ball-stage__label--top {
+  top: calc(var(--pad) - 1em - 9px);
+  /* Opção B da cliente (11/09/2026): a bolinha inteira no verde da logo.
+     O estado deixou de ser dito pela troca verde/coral e passou a ser dito
+     pelo tom — claro solta, escuro aperta — então os dois rótulos ficam no
+     verde escuro e quem diferencia é a opacidade, como antes. */
+  color: var(--teal-deep);
+  opacity: calc(0.35 + var(--t) * 0.65);
+}
+
+.ball-stage__label--bottom {
+  bottom: calc(var(--pad) + 9px);
+  color: var(--teal-deep);
+  opacity: calc(1 - var(--t) * 0.65);
+}
+
+/*
+ * Reguas horizontais do trilho.
+ *
+ * Vao de ponta a ponta da tela, nao so da largura do palco: por isso a saida
+ * da margem com 100vw + margin-left negativa. O palco herda o respiro lateral
+ * da tela de execucao, mas as reguas precisam furar esse respiro.
+ *
+ * Sao quatro, dividindo o percurso em tres partes iguais. A de cima cai no
+ * APERTA, a de baixo no SOLTA.
+ */
+.ball-stage__rule {
+  position: absolute;
+  left: 50%;
+  width: 100vw;
+  margin-left: -50vw;
+  border-top: 1px dashed var(--guide);
+  pointer-events: none;
+}
+
+.ball-stage__rule--0 {
+  top: var(--pad);
+}
+
+.ball-stage__rule--1 {
+  top: calc(var(--pad) + (100% - var(--pad) * 2) * 0.33333);
+}
+
+.ball-stage__rule--2 {
+  top: calc(var(--pad) + (100% - var(--pad) * 2) * 0.66667);
+}
+
+.ball-stage__rule--3 {
+  top: calc(100% - var(--pad));
+}
+
+/* Circulo pontilhado marcando onde a bolinha vai parar. */
+.ball-stage__guide {
+  position: absolute;
+  left: 50%;
+  width: 58px;
+  height: 58px;
+  margin-left: -29px;
+  border: 1.5px dashed var(--guide);
+  border-radius: 50%;
+}
+
+.ball-stage__guide--top {
+  top: calc(var(--pad) - 29px);
+}
+
+.ball-stage__guide--bottom {
+  bottom: calc(var(--pad) - 29px);
+}
+
+/*
+ * Rastro: a linha que a bolinha deixa entre a base e a posicao atual.
+ * Cresce de baixo para cima com scaleY, que e barato de animar.
+ */
+.ball-stage__trail {
+  position: absolute;
+  left: 50%;
+  bottom: var(--pad);
+  width: 2px;
+  height: calc(100% - var(--pad) * 2);
+  margin-left: -1px;
+  transform-origin: bottom center;
+  transform: scaleY(var(--t));
+
+  /* Uma cor so, nao degrade: no app de referencia o rastro tem uma cor so,
+     do topo ate a base. No esquema verde (opção B) ela é o verde da logo. */
+  background: var(--teal);
+  border-radius: 2px;
+  opacity: 0.5;
+}
+
+/*
+ * Marcas do rastro, sobre as duas reguas do meio.
+ *
+ * Acendem quando o rastro passa por elas. A conta e opacidade crua a partir
+ * de --t, sem clamp: o CSS ja limita opacidade ao intervalo 0–1, entao valor
+ * negativo some e valor acima de 1 satura — que e exatamente o degrau curto
+ * que se quer aqui.
+ *
+ * A marca de cima esta a 1/3 do topo, ou seja a 2/3 do percurso: so acende
+ * quando --t passa de 0,667. A de baixo, a 1/3 do percurso, acende em 0,333.
+ */
+.ball-stage__dot {
+  position: absolute;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  margin-left: -4px;
+  margin-top: -4px;
+  border-radius: 50%;
+  background: var(--teal);
+  pointer-events: none;
+}
+
+.ball-stage__dot--1 {
+  top: calc(var(--pad) + (100% - var(--pad) * 2) * 0.33333);
+  opacity: calc((var(--t) - 0.66667) * 14);
+}
+
+.ball-stage__dot--2 {
+  top: calc(var(--pad) + (100% - var(--pad) * 2) * 0.66667);
+  opacity: calc((var(--t) - 0.33333) * 14);
+}
+
+/*
+ * Bolinha e halo compartilham a mesma conta de posicao.
+ *
+ * translateY vai de 0 (embaixo, SOLTA) ate -(altura util) (em cima, APERTA).
+ *
+ * A altura util vem de --travel-px, escrita pelo JS a cada mudanca de layout
+ * (nao a cada quadro). Nao da para tirar isso de uma porcentagem: dentro de
+ * translate() a porcentagem se resolve contra a altura da PROPRIA bolinha, e
+ * nao contra a do trilho. Medir uma vez e mais barato — e correto — do que
+ * animar "bottom", que forcaria recalculo de layout 60 vezes por segundo.
+ */
+.ball-stage__ball,
+.ball-stage__halo {
+  position: absolute;
+  left: 50%;
+  bottom: var(--pad);
+  border-radius: 50%;
+
+  /* A escala entra AQUI, no fim da cadeia, e nao na propriedade `scale`.
+     A propriedade `scale` compoe por fora do `transform`, entao ela multiplica
+     tambem as translacoes: com escala 1.2 no topo, a bolinha subia 1,2x o
+     trilho e passava da marca. Dentro do transform, e aplicada primeiro (a
+     cadeia resolve da direita para a esquerda) e so redimensiona a bolinha em
+     torno do proprio centro, sem mexer no percurso. */
+  transform: translate(-50%, 50%)
+    translateY(calc(-1 * var(--t) * var(--travel) * var(--travel-px)))
+    scale(var(--scale, 1));
+  will-change: transform;
+}
+
+.ball-stage__ball {
+  width: 58px;
+  height: 58px;
+
+  /* Verde claro embaixo, verde profundo em cima (opção B). A cor continua
+     sendo a segunda leitura do movimento: claro = solta, escuro = aperta.
+
+     Mistura em oklab: entre dois tons do mesmo verde a diferenca para srgb e
+     pequena, mas oklab mantem a percepcao de claro/escuro linear ao longo do
+     percurso — justamente o que codifica o estado agora. */
+  background: color-mix(in oklab, var(--teal-deep) calc(var(--t) * 100%), var(--teal-light));
+
+  /*
+   * ENCOLHE ao apertar, nao cresce.
+   *
+   * Medido na gravacao: a bolinha relaxada tem 58px e a contraida 42px — 0,73
+   * do tamanho. Faz sentido para o gesto (contrair e fechar, nao inchar) e era
+   * o contrario aqui, o que fazia o aperta parecer uma expansao.
+   */
+  --scale: calc(1 - var(--t) * 0.27);
+}
+
+.ball-stage__halo {
+  width: 105px;
+  height: 105px;
+  /* Halo fixo no verde suave: com a bolinha inteira em verde, um halo que
+     trocasse de cor viraria ruido. O aperto ja aparece no fechamento e na
+     opacidade. */
+  background: var(--teal-soft);
+  opacity: calc(0.4 + var(--t) * 0.3);
+  /* O halo fecha mais que a bolinha: 105px relaxado, 52px contraido. */
+  --scale: calc(1 - var(--t) * 0.5);
+}
+
+/* ---------------------------------------------------------------------------
+   Modo pulsacao
+   ---------------------------------------------------------------------------
+   Na pulsacao a repeticao inteira leva pouco mais de um segundo. Uma bolinha
+   percorrendo o trilho nesse tempo vira um borrao, e a usuaria nao consegue
+   seguir. Entao ali ela fica no centro e so encolhe e muda de cor, que e o que
+   o olho acompanha em movimento rapido.
+*/
+.ball-stage--pulse {
+  --travel: 0;
+}
+
+.ball-stage--pulse .ball-stage__ball,
+.ball-stage--pulse .ball-stage__halo {
+  bottom: 50%;
+}
+
+/* Medidas da gravacao: bolinha 100px relaxada e 71px contraida (0,71),
+   halo 160px e 98px (0,61). */
+.ball-stage--pulse .ball-stage__ball {
+  width: 100px;
+  height: 100px;
+  --scale: calc(1 - var(--t) * 0.29);
+}
+
+.ball-stage--pulse .ball-stage__halo {
+  width: 160px;
+  height: 160px;
+  --scale: calc(1 - var(--t) * 0.39);
+}
+
+/* Rotulos empilhados embaixo da bolinha grande. A troca sai de --t, o mesmo
+   valor que colore a bolinha, entao palavra e cor nunca se contradizem. */
+.pulse-label {
+  position: absolute;
+  bottom: 10%;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.pulse-label--squeeze {
+  color: var(--teal-deep);
+  opacity: var(--t);
+}
+
+.pulse-label--release {
+  color: var(--teal-deep);
+  opacity: calc(1 - var(--t));
+}

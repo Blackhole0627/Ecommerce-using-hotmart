@@ -1,0 +1,215 @@
+.settings__header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+  padding: calc(var(--safe-top) + 14px) 20px 14px;
+}
+
+.settings__title {
+  font-family: var(--font-serif);
+  font-size: 1.7rem;
+  font-weight: 600;
+}
+
+.settings__group {
+  padding: 17px 18px;
+  margin-bottom: 14px;
+}
+
+.settings__group-title {
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.settings__group-hint {
+  margin-top: 9px;
+  font-size: 0.83rem;
+  line-height: 1.5;
+  color: var(--ink-muted);
+}
+
+/* -------------------------------------------------------------------------- */
+
+.toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 15px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.settings__group .toggle:first-of-type {
+  padding-top: 14px;
+}
+
+.settings__group .toggle:last-of-type {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.toggle--disabled {
+  opacity: 0.62;
+}
+
+.toggle__text {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.toggle__label {
+  font-size: 0.97rem;
+  font-weight: 600;
+}
+
+.toggle__hint {
+  font-size: 0.79rem;
+  line-height: 1.45;
+  color: var(--ink-muted);
+}
+
+.switch {
+  flex: 0 0 auto;
+  position: relative;
+  width: 50px;
+  height: 30px;
+  border-radius: var(--radius-pill);
+  background: #e4dde3;
+  transition: background-color 200ms ease;
+}
+
+.switch[aria-checked='true'] {
+  background: var(--coral);
+}
+
+.switch:disabled {
+  cursor: not-allowed;
+}
+
+.switch__knob {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 3px rgb(59 43 38 / 22%);
+  transition: transform 200ms cubic-bezier(0.3, 1.2, 0.4, 1);
+}
+
+.switch[aria-checked='true'] .switch__knob {
+  transform: translateX(20px);
+}
+
+/* -------------------------------------------------------------------------- */
+
+.settings__choices {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.settings__choices--two {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.choice {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 12px 6px;
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--canvas);
+  transition: border-color 180ms ease, background-color 180ms ease;
+}
+
+.choice--on {
+  border-color: var(--coral);
+  background: var(--coral-wash);
+}
+
+.choice__label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.choice__hint {
+  font-size: 0.72rem;
+  color: var(--ink-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.choice--on .choice__hint {
+  color: var(--coral-deep);
+}
+
+/* -------------------------------------------------------------------------- */
+
+.settings__group .btn--ghost {
+  margin-top: 14px;
+  box-shadow: none;
+  border: 1.5px solid var(--line);
+}
+
+.settings__confirm {
+  margin-top: 14px;
+}
+
+.settings__confirm p {
+  font-size: 0.92rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.settings__confirm-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.settings__about {
+  margin-top: 8px;
+  text-align: center;
+  font-size: 0.76rem;
+  color: var(--ink-faint);
+}
+
+/* Código de acesso: monoespaçado, porque é lido em voz alta ou copiado para
+   uma mensagem de suporte, caractere a caractere. */
+.settings__access-code {
+  margin-top: 10px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+/* Passo a passo de instalacao reaproveitado dentro do card de ajustes. */
+.settings__group .install__steps {
+  margin: 14px 0 0;
+}
+
+/* Links das paginas legais: botoes fantasmas empilhados, um por linha. */
+.settings__legal-links {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+

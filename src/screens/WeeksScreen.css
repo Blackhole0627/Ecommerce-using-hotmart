@@ -1,0 +1,368 @@
+/* Cabeçalho com o logo dela centralizado, como capa. A engrenagem sai do
+   fluxo para o logo poder ficar no meio de verdade. */
+.weeks__header {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+  padding: calc(var(--safe-top) + 18px) 20px 14px;
+  text-align: center;
+}
+
+.weeks__header .icon-btn {
+  position: absolute;
+  top: calc(var(--safe-top) + 16px);
+  right: 14px;
+}
+
+/* O logo da cliente, no lugar onde estava o nome escrito. A altura é a que
+   deixa a flor legível sem empurrar o treino do dia para fora da primeira
+   tela do iPhone. */
+.weeks__brand {
+  display: block;
+  line-height: 0;
+}
+
+.weeks__logo {
+  display: block;
+  width: auto;
+  height: 118px;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+/* --------------------------------------------------------------------------
+   Comece por aqui
+   -------------------------------------------------------------------------- */
+
+.start-here {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  padding: 15px 16px;
+  margin-bottom: 14px;
+  text-align: left;
+  border-radius: var(--radius);
+  background: linear-gradient(135deg, var(--coral), var(--coral-deep));
+  color: #fff;
+  box-shadow: 0 6px 20px rgb(239 107 88 / 26%);
+  transition: transform 140ms ease;
+}
+
+.start-here:active {
+  transform: scale(0.985);
+}
+
+/* Depois de lido, para de disputar atenção com o treino do dia. */
+.start-here--read {
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: var(--shadow-card);
+}
+
+.start-here__body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.start-here__eyebrow {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+
+.start-here__title {
+  font-size: 1.02rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.start-here__chevron {
+  flex: 0 0 auto;
+  opacity: 0.9;
+}
+
+/* --------------------------------------------------------------------------
+   Sessao interrompida
+   -------------------------------------------------------------------------- */
+
+.resume {
+  padding: 15px 16px;
+  margin-bottom: 14px;
+  border-radius: var(--radius);
+  background: var(--teal-wash);
+  border: 1.5px solid var(--teal-soft);
+}
+
+.resume__body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.resume__eyebrow {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--teal-deep);
+}
+
+.resume__where {
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.resume__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 12px;
+}
+
+.resume__go {
+  min-height: 48px;
+}
+
+.resume__drop {
+  min-height: 38px;
+  font-size: 0.84rem;
+}
+
+/* --------------------------------------------------------------------------
+   Progresso
+   -------------------------------------------------------------------------- */
+
+.weeks__progress {
+  padding: 16px 18px;
+}
+
+.weeks__progress-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 0.92rem;
+}
+
+.weeks__progress-top span {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--ink-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.weeks__bar {
+  height: 8px;
+  margin-top: 11px;
+  border-radius: var(--radius-pill);
+  background: var(--coral-wash);
+  overflow: hidden;
+}
+
+.weeks__bar span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--coral), var(--coral-deep));
+  transition: width 420ms cubic-bezier(0.3, 0.8, 0.3, 1);
+}
+
+.weeks__progress-hint {
+  margin-top: 11px;
+  font-size: 0.82rem;
+  color: var(--ink-muted);
+}
+
+/* --------------------------------------------------------------------------
+   Semanas
+   -------------------------------------------------------------------------- */
+
+/* Título de seção em serifa, no caso e no tamanho de um texto — e não a
+   etiqueta em versalete que todo app usa. É metade do que ela chamou de
+   "visual mais feminino": o app lê como uma página, não como um formulário. */
+.weeks__section-title {
+  margin: 28px 0 12px;
+  font-family: var(--font-serif);
+  font-size: 1.32rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--ink);
+}
+
+.weeks__list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.week {
+  padding: 15px 14px;
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+}
+
+.week--locked {
+  background: transparent;
+  box-shadow: none;
+  border: 1px dashed var(--line);
+  opacity: 0.72;
+}
+
+.week--done {
+  background: linear-gradient(180deg, #fff, var(--teal-wash));
+}
+
+.week__head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/* O ícone da postura carrega o estado da semana: deitada, sentada, em pé —
+   ou cadeado quando travada, confirmação quando concluída. */
+.week__mark {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+}
+
+.week--available .week__mark {
+  background: var(--coral);
+  color: #fff;
+  box-shadow: 0 4px 12px rgb(239 107 88 / 26%);
+}
+
+.week--done .week__mark {
+  background: var(--teal);
+  color: #fff;
+}
+
+.week--locked .week__mark {
+  background: var(--sand);
+  color: var(--ink-faint);
+}
+
+.week__headings {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.week__eyebrow {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.week__posture {
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.week__meta {
+  font-size: 0.79rem;
+  color: var(--ink-muted);
+}
+
+/* --------------------------------------------------------------------------
+   Fichas dos dias
+   -------------------------------------------------------------------------- */
+
+.week__days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.day-chip {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: var(--radius-sm);
+  font-size: 0.86rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  overflow: hidden;
+  transition: transform 130ms ease;
+}
+
+.day-chip:not(:disabled):active {
+  transform: scale(0.94);
+}
+
+.day-chip--available {
+  background: var(--coral-wash);
+  color: var(--coral-deep);
+  border: 1.5px solid var(--coral);
+}
+
+.day-chip--done {
+  background: var(--teal);
+  color: #fff;
+}
+
+.day-chip--locked {
+  background: var(--sand);
+  color: var(--ink-faint);
+  cursor: not-allowed;
+}
+
+/* Um dos dois treinos do dia já foi feito: metade da ficha se pinta. */
+.day-chip__half {
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 50%;
+  background: var(--coral);
+  opacity: 0.22;
+  pointer-events: none;
+}
+
+.weeks__note {
+  margin-top: 20px;
+  padding: 13px 15px;
+  background: var(--teal-wash);
+  border-radius: var(--radius-sm);
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--teal-deep);
+}
+
+/* "Salvo onde?" — pergunta literal da cliente, respondida onde o progresso
+   aparece e onde o treino interrompido é oferecido de volta. */
+
+.weeks__progress-saved,
+.resume__saved {
+  margin-top: 6px;
+  font-size: 0.76rem;
+  line-height: 1.35;
+  color: var(--ink-muted);
+}
+
+.resume__saved {
+  margin-top: 4px;
+}

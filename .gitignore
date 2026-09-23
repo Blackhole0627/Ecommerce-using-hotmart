@@ -27,3 +27,6 @@ ebook/manual.pdf
 .env*
 # Reafirma a excecao depois do .env* de cima, senao ela e engolida.
 !.env.production
+
+.vercel
+.env*

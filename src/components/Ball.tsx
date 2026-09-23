@@ -59,7 +59,14 @@ export const Ball = forwardRef<HTMLDivElement, Props>(function Ball({ mode, hasH
         </>
       )}
       <span className="ball-stage__halo" />
-      <span className="ball-stage__ball" />
+      {/*
+        A flor da logo no lugar da bolinha (pedido da cliente, 23/09/2026):
+        além de marca, é diferenciação visual do app de referência, que usa um
+        círculo liso. A flor "fecha" ao apertar pelo mesmo --scale de antes.
+      */}
+      <span className="ball-stage__ball">
+        <img src="/brand/logo-mark.png" alt="" draggable={false} />
+      </span>
 
       {/*
         No modo pulsação os dois rótulos ficam empilhados e trocam por

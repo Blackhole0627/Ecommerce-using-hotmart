@@ -194,8 +194,8 @@
 }
 
 .ball-stage__ball {
-  width: 58px;
-  height: 58px;
+  width: 64px;
+  height: 64px;
 
   /* Verde claro embaixo, verde profundo em cima (opção B). A cor continua
      sendo a segunda leitura do movimento: claro = solta, escuro = aperta.
@@ -203,7 +203,12 @@
      Mistura em oklab: entre dois tons do mesmo verde a diferenca para srgb e
      pequena, mas oklab mantem a percepcao de claro/escuro linear ao longo do
      percurso — justamente o que codifica o estado agora. */
-  background: color-mix(in oklab, var(--teal-deep) calc(var(--t) * 100%), var(--teal-light));
+  /* A flor da logo no lugar do circulo (23/09/2026): identidade da marca e
+     diferenciacao visual do app de referencia. Sem cor de fundo — a imagem e
+     a propria bolinha; o estado aperta/solta aparece no fechamento (escala),
+     no halo e no rastro, como na previa "opcao C" aprovada pela cliente. */
+  background: none;
+  border-radius: 0;
 
   /*
    * ENCOLHE ao apertar, nao cresce.
@@ -213,6 +218,15 @@
    * o contrario aqui, o que fazia o aperta parecer uma expansao.
    */
   --scale: calc(1 - var(--t) * 0.27);
+}
+
+.ball-stage__ball img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  pointer-events: none;
+  user-select: none;
 }
 
 .ball-stage__halo {

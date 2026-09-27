@@ -31,7 +31,7 @@ export const pt: Dict = {
     daysDone: (done: number, total: number) => `${done} de ${total} dias`,
     resumeTitle: 'Treino em andamento',
     resumeWhere: (week: number, day: number, series: number, workout: string) =>
-      `Semana ${week}, dia ${day} · ${workout} — você parou na série ${series}`,
+      `Semana ${week}, dia ${day} · ${workout}. Você parou na série ${series}`,
     resumeCta: 'Continuar de onde parou',
     resumeDiscard: 'Recomeçar o dia',
     savedHere: 'Guardado neste celular. Sem conta, sem senha.',
@@ -46,7 +46,7 @@ export const pt: Dict = {
     steps: [
       {
         title: 'Localize',
-        body: 'Imagine que você está segurando um gás e, ao mesmo tempo, interrompendo o xixi. Essa subida para dentro e para cima é o assoalho pélvico. Use isso apenas para identificar o músculo — não pratique durante o xixi de verdade.',
+        body: 'Imagine que você está segurando um gás e, ao mesmo tempo, interrompendo o xixi. Essa subida para dentro e para cima é o assoalho pélvico. Use isso apenas para identificar o músculo. Não pratique durante o xixi de verdade.',
       },
       {
         title: 'Veja o que mais se mexe',
@@ -54,7 +54,7 @@ export const pt: Dict = {
       },
       {
         title: 'Continue respirando',
-        body: 'Prender a respiração é o erro mais comum. Respire normalmente o tempo todo — no começo, ajuda contrair na hora de soltar o ar.',
+        body: 'Prender a respiração é o erro mais comum. Respire normalmente o tempo todo. No começo, ajuda contrair na hora de soltar o ar.',
       },
       {
         title: 'Solte por completo',
@@ -77,7 +77,7 @@ export const pt: Dict = {
     standing: 'Em pé',
     lyingHint: 'Deite de costas, joelhos dobrados e pés apoiados. É a posição em que fica mais fácil sentir o músculo trabalhando.',
     seatedHint: 'Sente-se ereta em uma cadeira firme, pés no chão, peso igual dos dois lados.',
-    standingHint: 'Em pé, pés na largura do quadril, joelhos soltos. A posição mais difícil — a gravidade joga contra.',
+    standingHint: 'Em pé, pés na largura do quadril, joelhos soltos. A posição mais difícil, porque a gravidade joga contra.',
   },
 
   style: {
@@ -104,7 +104,7 @@ export const pt: Dict = {
       strengthQuick: [
         'Contraia com firmeza, segure enquanto a bolinha fica parada em cima e solte por completo.',
         'Respire normalmente. Prender o ar atrapalha o movimento.',
-        'Barriga, coxas e glúteos ficam relaxados — o trabalho é interno.',
+        'Barriga, coxas e glúteos ficam relaxados. O trabalho é interno.',
       ],
       strengthHold: [
         'Aperte, segure firme por cinco segundos e solte devagar.',
@@ -133,7 +133,7 @@ export const pt: Dict = {
     completed: 'Treino concluído',
     pausedTitle: 'Pausado',
     pausedBody:
-      'Seu lugar está guardado neste celular. Pode fechar o app e voltar depois — o treino continua nesta série, esperando.',
+      'Seu lugar está guardado neste celular. Pode fechar o app e voltar depois. O treino continua nesta série, esperando.',
     soundOn: 'Desligar som',
     soundOff: 'Ligar som',
     vibrationOn: 'Desligar vibração',
@@ -151,7 +151,7 @@ export const pt: Dict = {
     later: 'Faço depois',
     dayUnlocked: (day: number) => `O dia ${day} está liberado.`,
     weekUnlocked: (week: number, posture: string) =>
-      `A semana ${week} está liberada — mesmo treino, ${posture.toLowerCase()}.`,
+      `A semana ${week} está liberada: mesmo treino, ${posture.toLowerCase()}.`,
     programDoneBody: 'Você fechou as seis semanas. Pode recomeçar o ciclo quando quiser.',
     sets: 'Séries',
     totalReps: 'Repetições',
@@ -171,7 +171,7 @@ export const pt: Dict = {
       'Neste aparelho o recurso é aproximado. Se a tela ainda apagar, aumente o tempo de bloqueio automático nos ajustes do celular.',
     pulseTitle: 'Ritmo da pulsação',
     pulseHint:
-      'Na pulsação a repetição é um aperto curto seguido de uma pausa maior — cerca de um segundo ao todo. Escolha o ritmo que der para acompanhar.',
+      'Na pulsação a repetição é um aperto curto seguido de uma pausa maior, cerca de um segundo ao todo. Escolha o ritmo que der para acompanhar.',
     pulseSlower: 'Mais devagar',
     pulseDefault: 'Padrão',
     pulseFaster: 'Mais rápido',
@@ -190,7 +190,7 @@ export const pt: Dict = {
     installTitle: 'Instalar na tela inicial',
     installHint:
       'Instalado, ele abre em tela cheia, com ícone próprio, e funciona sem internet. O passo a passo fica sempre aqui, caso precise de novo.',
-    installDone: 'Já instalado — você está usando pela tela inicial.',
+    installDone: 'Já instalado. Você está usando pela tela inicial.',
     accessTitle: 'Seu acesso',
     accessCode: (code: string) => `Código ${code}`,
     accessHint:
@@ -237,7 +237,7 @@ export const pt: Dict = {
   blocked: {
     expiredTitle: 'Hora de conferir o acesso',
     expiredBody:
-      'O app funciona sem internet, mas mais ou menos uma vez por semana ele precisa de um instante de conexão para confirmar que o seu acesso continua ativo. Conecte e toque no botão abaixo — o seu progresso não é afetado.',
+      'O app funciona sem internet, mas mais ou menos uma vez por semana ele precisa de um instante de conexão para confirmar que o seu acesso continua ativo. Conecte e toque no botão abaixo. O seu progresso não é afetado.',
     revokedTitle: 'Este acesso não está mais ativo',
     revokedBody:
       'O código deste celular foi cancelado, normalmente depois de um reembolso. Se achar que houve engano, responda o e-mail da compra que a gente verifica.',
@@ -292,7 +292,7 @@ export const pt: Dict = {
           {
             h: 'A conferência semanal',
             ps: [
-              'Mais ou menos uma vez por semana o app fala com o nosso servidor para confirmar que o seu acesso continua ativo. Essa chamada leva o seu código de acesso e o identificador do aparelho — nada além disso.',
+              'Mais ou menos uma vez por semana o app fala com o nosso servidor para confirmar que o seu acesso continua ativo. Essa chamada leva o seu código de acesso e o identificador do aparelho, e nada além disso.',
             ],
           },
           {
@@ -361,7 +361,7 @@ export const pt: Dict = {
           {
             h: '',
             ps: [
-              'O The Squeeze Method — o app e o ebook — é um programa educativo de treino. Ele não fornece aconselhamento médico e não substitui a avaliação, o diagnóstico nem o tratamento de um profissional de saúde.',
+              'O The Squeeze Method, ou seja, o app e o ebook, é um programa educativo de treino. Ele não fornece aconselhamento médico e não substitui a avaliação, o diagnóstico nem o tratamento de um profissional de saúde.',
             ],
           },
           {

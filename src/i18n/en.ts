@@ -32,7 +32,7 @@ export const en = {
     daysDone: (done: number, total: number) => `${done} of ${total} days`,
     resumeTitle: 'Workout in progress',
     resumeWhere: (week: number, day: number, series: number, workout: string) =>
-      `Week ${week}, day ${day} · ${workout} — you stopped on set ${series}`,
+      `Week ${week}, day ${day} · ${workout}. You stopped on set ${series}`,
     resumeCta: 'Pick up where you left off',
     resumeDiscard: 'Start the day over',
     savedHere: 'Saved on this phone. No account, no password.',
@@ -47,7 +47,7 @@ export const en = {
     steps: [
       {
         title: 'Locate it',
-        body: 'Imagine you are trying to stop yourself from passing gas, and at the same time stop the flow of urine. That inward-and-upward lift is the pelvic floor. Use this only to identify the muscle — do not practice while actually urinating.',
+        body: 'Imagine you are trying to stop yourself from passing gas, and at the same time stop the flow of urine. That inward-and-upward lift is the pelvic floor. Use this only to identify the muscle. Do not practice while actually urinating.',
       },
       {
         title: 'Check what else is moving',
@@ -55,7 +55,7 @@ export const en = {
       },
       {
         title: 'Keep breathing',
-        body: 'Holding your breath is the most common mistake. Breathe normally the whole time — squeeze as you exhale if that helps at first.',
+        body: 'Holding your breath is the most common mistake. Breathe normally the whole time. At first, it can help to squeeze as you exhale.',
       },
       {
         title: 'Let go completely',
@@ -78,7 +78,7 @@ export const en = {
     standing: 'Standing',
     lyingHint: 'Lie on your back with knees bent and feet flat. The easiest position to feel the muscle working.',
     seatedHint: 'Sit upright on a firm chair, feet flat on the floor, weight even on both sides.',
-    standingHint: 'Stand with feet hip-width apart, knees soft. The hardest position — gravity is working against you.',
+    standingHint: 'Stand with feet hip-width apart, knees soft. The hardest position, since gravity is working against you.',
   },
 
   style: {
@@ -105,7 +105,7 @@ export const en = {
       strengthQuick: [
         'Squeeze firmly, hold while the ball rests at the top, then let go completely.',
         'Breathe normally. Holding your breath works against the movement.',
-        'Belly, thighs and buttocks stay relaxed — the work is internal.',
+        'Belly, thighs and buttocks stay relaxed. The work is internal.',
       ],
       strengthHold: [
         'Squeeze, hold steady for five seconds, then release slowly.',
@@ -134,7 +134,7 @@ export const en = {
     completed: 'Workout complete',
     pausedTitle: 'Paused',
     pausedBody:
-      'Your place is saved on this phone. You can close the app and come back — the workout will be waiting on this set.',
+      'Your place is saved on this phone. You can close the app and come back. The workout will be waiting on this set.',
     soundOn: 'Turn sound off',
     soundOff: 'Turn sound on',
     vibrationOn: 'Turn vibration off',
@@ -152,7 +152,7 @@ export const en = {
     later: "I'll do it later",
     dayUnlocked: (day: number) => `Day ${day} is now open.`,
     weekUnlocked: (week: number, posture: string) =>
-      `Week ${week} is now open — same workout, ${posture.toLowerCase()}.`,
+      `Week ${week} is now open: same workout, ${posture.toLowerCase()}.`,
     programDoneBody: 'You finished all six weeks. You can start the cycle again whenever you like.',
     sets: 'Sets',
     totalReps: 'Total reps',
@@ -172,7 +172,7 @@ export const en = {
       'On this device the feature is approximate. If the screen still goes dark, raise the auto-lock time in your phone settings.',
     pulseTitle: 'Pulse rhythm',
     pulseHint:
-      'A pulse repetition is a quick squeeze followed by a longer rest — about one second in all. Pick the pace you can actually follow.',
+      'A pulse repetition is a quick squeeze followed by a longer rest, about one second in all. Pick the pace you can actually follow.',
     pulseSlower: 'Slower',
     pulseDefault: 'Default',
     pulseFaster: 'Faster',
@@ -191,7 +191,7 @@ export const en = {
     installTitle: 'Add to your home screen',
     installHint:
       'Installed, it opens full screen with its own icon and works without internet. These steps are always here if you need them again.',
-    installDone: 'Already installed — you are running it from the home screen.',
+    installDone: 'Already installed. You are running it from the home screen.',
     accessTitle: 'Your access',
     accessCode: (code: string) => `Code ${code}`,
     accessHint:
@@ -222,7 +222,7 @@ export const en = {
     cta: 'Unlock the app',
     working: 'Checking…',
     once: 'You only do this once on this phone. After that the app opens straight into your program, with or without internet.',
-    help: 'Bought with a different address, or received an access code instead? Enter that here — it works too.',
+    help: 'Bought with a different address, or received an access code instead? Enter that here. It works too.',
     errors: {
       bad_code: 'That does not look like a complete e-mail address.',
       unknown_code: 'We could not find a purchase with that e-mail. Check for typos, and make sure it is the address you used at checkout.',
@@ -238,7 +238,7 @@ export const en = {
   blocked: {
     expiredTitle: 'Time to check in',
     expiredBody:
-      'The app runs offline, but about once a week it needs a moment of internet to confirm your access is still active. Connect and tap below — your progress is untouched.',
+      'The app runs offline, but about once a week it needs a moment of internet to confirm your access is still active. Connect and tap below. Your progress is untouched.',
     revokedTitle: 'This access is no longer active',
     revokedBody:
       'The code on this phone has been cancelled, usually after a refund. If you think this is a mistake, reply to your purchase email and we will look into it.',
@@ -293,7 +293,7 @@ export const en = {
           {
             h: 'The weekly check-in',
             ps: [
-              'About once a week the app contacts our server to confirm your access is still active. That request carries your access code and device identifier — nothing else.',
+              'About once a week the app contacts our server to confirm your access is still active. That request carries your access code and device identifier, and nothing else.',
             ],
           },
           {
@@ -362,7 +362,7 @@ export const en = {
           {
             h: '',
             ps: [
-              'The Squeeze Method — the app and the ebook — is an educational training program. It does not provide medical advice, and it is not a substitute for evaluation, diagnosis or treatment by a healthcare professional.',
+              'The Squeeze Method, meaning the app and the ebook, is an educational training program. It does not provide medical advice, and it is not a substitute for evaluation, diagnosis or treatment by a healthcare professional.',
             ],
           },
           {

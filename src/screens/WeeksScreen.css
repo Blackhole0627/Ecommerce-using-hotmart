@@ -176,7 +176,7 @@
 }
 
 .weeks__progress-hint {
-  margin-top: 11px;
+  margin-top: 0;
   font-size: 0.82rem;
   color: var(--ink-muted);
 }
@@ -365,4 +365,10 @@
 
 .resume__saved {
   margin-top: 4px;
+}
+
+/* Card do proximo passo, separado da barra de progresso. */
+.weeks__next {
+  padding: 14px 18px;
+  margin: 14px 0;
 }

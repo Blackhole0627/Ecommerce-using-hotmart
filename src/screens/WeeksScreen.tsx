@@ -158,6 +158,11 @@ export function WeeksScreen({
           >
             <span style={{ width: `${percent}%` }} />
           </div>
+        </section>
+
+        {/* Próximo passo em card próprio, separado da barra (pedido da cliente,
+            06/10/2026): os dois blocos juntos liam como um só e apertado. */}
+        <section className="card weeks__next">
           <p className="weeks__progress-hint">
             {upNext ? t.home.upNext(upNext.day.week, upNext.day.day) : t.home.allDone}
           </p>

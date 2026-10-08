@@ -9,8 +9,13 @@ import { LegalScreen, type LegalPage } from './screens/LegalScreen'
 import { EbookScreen } from './screens/EbookScreen'
 import { GateScreen, GateSplash } from './screens/GateScreen'
 import { BlockedScreen } from './screens/BlockedScreen'
+import { LoginScreen } from './screens/LoginScreen'
 import { useProgram } from './lib/useProgram'
 import { useLicense } from './lib/useLicense'
+import { useAuth } from './lib/useAuth'
+import { useCloudSync } from './lib/sync'
+import { renameAccount } from './lib/auth'
+import { LOGIN_ENABLED } from './lib/session'
 import { audio } from './lib/audio'
 import { I18nContext, dictionaries, localeTag } from './i18n'
 
@@ -34,6 +39,8 @@ type View =
 
 export function App() {
   const {
+    progress,
+    replaceProgress,
     weeks,
     daysPerWeek,
     settings,
@@ -61,7 +68,26 @@ export function App() {
    * em cima, e não dentro de cada tela, para não existir um caminho de navegação
    * que entre pela lateral e pule a porta.
    */
-  const licence = useLicense()
+  /**
+   * Com o login ligado, a conta vem antes da licenca: sem conta, a tela de
+   * login; com conta, a licenca e pedida sozinha com a sessao. A licenca
+   * continua sendo quem decide se o app abre (reembolso, uso offline).
+   */
+  const auth = useAuth()
+  const signedIn = LOGIN_ENABLED && auth.session !== null
+  const licence = useLicense({
+    autoEmail: LOGIN_ENABLED ? auth.session?.user.email : undefined,
+    onAuthLost: auth.signOut,
+  })
+  const sync = useCloudSync({
+    enabled: signedIn && licence.state.status === 'ok',
+    progress,
+    replace: replaceProgress,
+    onUser: auth.updateUser,
+    onSignedOut: auth.signOut,
+  })
+  /** Sem conta, a unica tela alem do login e a politica de privacidade. */
+  const [signedOutView, setSignedOutView] = useState<'login' | 'privacy'>('login')
 
   const currentWeek = 'week' in view ? weeks.find((w) => w.week === view.week) : undefined
 
@@ -126,6 +152,21 @@ export function App() {
           onReset={resetAll}
           onBack={() => setView({ name: 'weeks' })}
           onOpenLegal={(page) => setView({ name: 'legal', page })}
+          account={
+            signedIn && auth.session
+              ? {
+                  user: auth.session.user,
+                  sync: sync.status,
+                  onRename: async (name) => {
+                    const user = await renameAccount(name)
+                    if (user) auth.updateUser(user)
+                    return Boolean(user)
+                  },
+                  onSignOut: auth.signOut,
+                  onDelete: auth.deleteAccount,
+                }
+              : undefined
+          }
         />
       )
     }
@@ -239,24 +280,44 @@ export function App() {
         onOpenDay={(week, day) => setView({ name: 'day', week, day })}
         onOpenSettings={() => setView({ name: 'settings' })}
         onOpenEbook={() => setView({ name: 'ebook' })}
+        account={signedIn && auth.session ? { name: auth.session.user.name } : undefined}
       />
     )
   }
 
   /** Tudo que aparece no lugar do programa enquanto o acesso não está liberado. */
   const gate = () => {
+    if (LOGIN_ENABLED && !auth.session) {
+      if (signedOutView === 'privacy') {
+        return <LegalScreen page="privacy" onBack={() => setSignedOutView('login')} />
+      }
+      return (
+        <LoginScreen
+          language={settings.language}
+          onSignedIn={(session) => {
+            auth.signedIn(session)
+            // A licenca ja foi guardada pelo login; isto so a le e abre o app.
+            void licence.recheck()
+          }}
+          onOpenPrivacy={() => setSignedOutView('privacy')}
+        />
+      )
+    }
     if (licence.state.status === 'checking') return <GateSplash />
     if (licence.state.status === 'blocked') {
       return (
         <BlockedScreen
           reason={licence.state.reason}
           onRetry={licence.retry}
-          onUseAnother={licence.useAnother}
+          onUseAnother={LOGIN_ENABLED ? auth.signOut : licence.useAnother}
+          anotherLabel={LOGIN_ENABLED ? t.blocked.signOut : undefined}
           busy={licence.busy}
           stillOffline={licence.stillOffline}
         />
       )
     }
+    // Logada e ainda sem licenca: o pedido automatico esta a caminho.
+    if (LOGIN_ENABLED) return <GateSplash />
     return (
       <GateScreen
         code={licence.code}
@@ -270,7 +331,7 @@ export function App() {
 
   return (
     <I18nContext.Provider value={t}>
-      {licence.state.status === 'ok' ? screen() : gate()}
+      {licence.state.status === 'ok' && (!LOGIN_ENABLED || signedIn) ? screen() : gate()}
     </I18nContext.Provider>
   )
 }

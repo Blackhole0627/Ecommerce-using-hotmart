@@ -35,6 +35,8 @@ export const pt: Dict = {
     resumeCta: 'Continuar de onde parou',
     resumeDiscard: 'Recomeçar o dia',
     savedHere: 'Guardado neste celular. Sem conta, sem senha.',
+    savedAccount: 'Salvo na sua conta. Entre em qualquer celular e continue de onde parou.',
+    greeting: (name: string) => `Que bom te ver, ${name}`,
     sequenceNote:
       'As semanas abrem em ordem. Cada uma se apoia na anterior: primeiro você aprende o movimento deitada, depois leva ele para sentada e em pé.',
   },
@@ -182,6 +184,8 @@ export const pt: Dict = {
     progressTitle: 'Progresso',
     progressHint:
       'Seu progresso fica salvo neste aparelho. Não há conta nem senha, e nada sai do seu celular.',
+    progressHintAccount:
+      'Seu progresso fica salvo na sua conta e é o mesmo em todos os seus aparelhos. Recomeçar o programa aqui recomeça em todos eles.',
     restart: 'Recomeçar o programa',
     confirmRestart: 'Apagar o progresso e voltar para a semana 1?',
     erase: 'Apagar',
@@ -231,6 +235,7 @@ export const pt: Dict = {
       offline: 'Sem conexão com a internet. A liberação precisa ser feita online, só desta vez.',
       store_unavailable: 'O serviço de ativação está indisponível no momento. Tente de novo em alguns minutos.',
       server_error: 'Algo deu errado do nosso lado. Tente de novo daqui a pouco.',
+      login_required: 'Entre na sua conta de novo.',
     },
   },
 
@@ -244,7 +249,71 @@ export const pt: Dict = {
     retry: 'Tentar de novo',
     retrying: 'Conferindo…',
     another: 'Usar outro código',
+    signOut: 'Sair da conta',
     stillOffline: 'Ainda sem conexão. Verifique a internet e tente mais uma vez.',
+  },
+
+  auth: {
+    eyebrow: 'Sua conta',
+    title: 'Entre para começar a treinar',
+    lede: 'Use o e-mail da sua compra. Seu progresso fica salvo na sua conta, então você nunca perde, nem trocando de celular.',
+    or: 'ou',
+    emailLabel: 'E-mail da compra',
+    emailPlaceholder: 'voce@exemplo.com',
+    sendCode: 'Me mande um código',
+    sending: 'Enviando…',
+    codeTitle: 'Confira seu e-mail',
+    codeLede: (email: string) =>
+      `Se ${email} for o e-mail da sua compra, um código de 6 números está a caminho. Ele vale por 10 minutos.`,
+    codeLabel: 'Código de acesso',
+    verify: 'Entrar',
+    verifying: 'Conferindo…',
+    resend: 'Mandar um código novo',
+    resendIn: (seconds: number) => `Mandar um código novo em ${seconds}s`,
+    resent: 'Código novo enviado.',
+    changeEmail: 'Usar outro e-mail',
+    noCode: 'Não chegou? Olhe a caixa de spam e confira se é o mesmo e-mail do comprovante da compra.',
+    linkTitle: 'Só mais um passo',
+    linkLede: (googleEmail: string) =>
+      `${googleEmail} ainda não está ligado a uma compra. Digite o e-mail que você usou na compra e a gente liga os dois. Isso é feito uma vez só.`,
+    privacy: 'Política de Privacidade',
+    errors: {
+      bad_email: 'Isso não parece um e-mail completo.',
+      bad_code: 'Código incorreto. Confira o e-mail mais recente e tente de novo.',
+      expired: 'Este código venceu. Peça um novo.',
+      too_many: 'Muitas tentativas. Peça um código novo.',
+      rate_limited: 'Muitos códigos pedidos. Espere alguns minutos e tente de novo.',
+      revoked: 'Esta compra não está mais ativa. Se achar que houve engano, responda o e-mail da compra.',
+      device_limit:
+        'Seu acesso já está em uso em três aparelhos, que é o limite. Responda o e-mail da compra que a gente libera um.',
+      google_failed: 'O login com o Google não funcionou. Tente de novo, ou use seu e-mail.',
+      no_purchase: 'Esta conta do Google não está ligada a uma compra.',
+      offline: 'Sem conexão com a internet. Para entrar, precisa estar online.',
+      store_unavailable: 'O login está indisponível no momento. Tente de novo em alguns minutos.',
+      server_error: 'Algo deu errado do nosso lado. Tente de novo daqui a pouco.',
+    },
+  },
+
+  account: {
+    title: 'Sua conta',
+    nameLabel: 'Nome',
+    namePlaceholder: 'Seu primeiro nome',
+    save: 'Salvar',
+    saved: 'Salvo',
+    saveFailed: 'Não deu para salvar. Confira sua conexão.',
+    emailLabel: 'E-mail',
+    synced: 'Seu progresso está salvo na sua conta.',
+    syncing: 'Salvando na sua conta…',
+    pending: 'As mudanças vão para a sua conta quando a internet voltar.',
+    signOut: 'Sair da conta',
+    signOutHint: 'Seu progresso continua na sua conta. Sair só tira ele deste celular.',
+    deleteTitle: 'Excluir minha conta',
+    deleteHint:
+      'Apaga seu perfil e o progresso salvo de vez. Sua compra não é afetada, e você pode entrar de novo depois e começar do zero.',
+    deleteConfirm: 'Excluir sua conta e o progresso salvo? Não dá para desfazer.',
+    deleteYes: 'Excluir de vez',
+    deleteFailed: 'Não deu para excluir agora. Confira sua conexão e tente de novo.',
+    cancel: 'Cancelar',
   },
 
   ebook: {
@@ -299,6 +368,55 @@ export const pt: Dict = {
             h: 'Suas escolhas',
             ps: [
               'Você pode pedir a exclusão do registro de ativação vinculado à sua compra a qualquer momento escrevendo para squeezemethod@gmail.com. Excluir o registro desativa o app nos seus aparelhos.',
+            ],
+          },
+          {
+            h: 'Mudanças',
+            ps: [
+              'Esta política pode ser atualizada conforme o produto evolui. A data acima sempre reflete a versão atual.',
+            ],
+          },
+        ],
+      },
+      privacyAccount: {
+        title: 'Política de Privacidade',
+        sections: [
+          {
+            h: 'O que esta política cobre',
+            ps: [
+              'Esta política explica quais informações o The Squeeze Method (femivita.online) trata quando você usa o app e o ebook, e como você mantém o controle sobre elas.',
+            ],
+          },
+          {
+            h: 'Sua conta',
+            ps: [
+              'Para entrar, você usa o e-mail da sua compra. Se escolher o Google, recebemos da sua conta Google o seu nome, e-mail e foto de perfil. Nós nunca vemos a sua senha do Google.',
+              'Sua conta guarda esse e-mail, o nome que você escolher mostrar e o seu progresso de treino: quais treinos você concluiu, em que dias, e os seus ajustes do app. Ela também guarda um identificador anônimo de cada aparelho em que você entra (até três).',
+            ],
+          },
+          {
+            h: 'Códigos de acesso',
+            ps: [
+              'Quando você entra com o e-mail, mandamos um código de uso único pelo nosso provedor de e-mail. O código vale por 10 minutos e é guardado só de forma embaralhada, nunca o código em si.',
+            ],
+          },
+          {
+            h: 'O que não fazemos',
+            ps: [
+              'Não pedimos e não guardamos nenhuma informação de saúde. O registro do seu progresso diz apenas quais treinos você terminou e quando.',
+              'O app não tem anúncios, analytics nem rastreadores. Não coletamos sua localização, e não vendemos nem compartilhamos informações pessoais com ninguém.',
+            ],
+          },
+          {
+            h: 'Compras',
+            ps: [
+              'Os pagamentos são processados pela Hotmart, a plataforma onde você comprou o produto, sob a política de privacidade dela. Nós recebemos apenas o necessário para liberar o acesso: o e-mail vinculado à sua compra e os avisos de reembolso.',
+            ],
+          },
+          {
+            h: 'Suas escolhas',
+            ps: [
+              'Você pode excluir sua conta a qualquer momento em Ajustes, em Sua conta. Isso apaga seu perfil e o progresso salvo na hora. Você também pode escrever para squeezemethod@gmail.com que a gente faz por você.',
             ],
           },
           {

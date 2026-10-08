@@ -372,3 +372,11 @@
   padding: 14px 18px;
   margin: 14px 0;
 }
+
+/* Cumprimento pelo nome, com conta. Discreto, logo abaixo do logo. */
+.weeks__greeting {
+  margin-top: 8px;
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  color: var(--ink-muted);
+}

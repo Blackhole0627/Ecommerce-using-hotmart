@@ -17,7 +17,8 @@
     "verify:resume": "node scripts/verify-resume.mjs",
     "verify:license": "node scripts/verify-license.mjs",
     "keys": "node scripts/gen-license-keys.mjs",
-    "codes": "node scripts/codes.mjs"
+    "codes": "node scripts/codes.mjs",
+    "verify:auth": "node scripts/verify-auth.mjs"
   },
   "dependencies": {
     "react": "^18.3.1",

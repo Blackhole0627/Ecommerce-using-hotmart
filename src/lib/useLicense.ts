@@ -48,8 +48,23 @@ const RECHECK_EVERY_MS = 60 * 60 * 1000
 const definitive = (error?: ActivateError): boolean =>
   error === 'revoked' || error === 'unknown_code' || error === 'not_activated'
 
-export function useLicense() {
+interface Options {
+  /**
+   * Com login: o e-mail da conta. Sem bilhete no aparelho, a licenca e pedida
+   * sozinha com a sessao, sem tela de codigo. Ver api/activate.ts.
+   */
+  autoEmail?: string
+  /** A sessao nao vale mais (conta excluida, login vencido): voltar ao login. */
+  onAuthLost?: () => void
+}
+
+export function useLicense(options: Options = {}) {
   const [state, setState] = useState<LicenceState>({ status: 'checking' })
+  // Em refs: mudam sem recriar check(), que roda uma vez so na abertura.
+  const autoEmail = useRef(options.autoEmail)
+  autoEmail.current = options.autoEmail
+  const onAuthLost = useRef(options.onAuthLost)
+  onAuthLost.current = options.onAuthLost
   const [code, setCode] = useState('')
   const [error, setError] = useState<ActivateError | null>(null)
   const [busy, setBusy] = useState(false)
@@ -104,7 +119,29 @@ export function useLicense() {
 
     const licence = loadLicence()
     if (!licence) {
-      setState({ status: 'locked' })
+      const email = autoEmail.current
+      if (!email) {
+        setState({ status: 'locked' })
+        return
+      }
+      // Logada, mas sem bilhete neste aparelho: pede um com a sessao.
+      setState({ status: 'checking' })
+      const answer = await activate(email)
+      if (accept(answer)) return
+      if (answer.offline) {
+        setError('offline')
+        setState({ status: 'blocked', reason: 'expired' })
+        return
+      }
+      if (answer.error === 'revoked') {
+        setState({ status: 'blocked', reason: 'revoked' })
+        return
+      }
+      if (answer.error === 'login_required' || answer.error === 'unknown_code') {
+        onAuthLost.current?.()
+        return
+      }
+      setState({ status: 'blocked', reason: 'expired' })
       return
     }
 
@@ -217,6 +254,8 @@ export function useLicense() {
 
   return {
     state,
+    /** Confere de novo agora: o login chama isto depois de guardar a licenca. */
+    recheck: check,
     code,
     onCodeChange,
     error,

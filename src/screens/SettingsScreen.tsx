@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { APP } from '../brand'
 import { IconArrowLeft } from '../components/icons'
+import { AccountCard } from '../components/AccountCard'
 import { InstallSteps } from '../components/InstallHint'
 import { isIOS, isStandalone } from '../lib/platform'
 import { audio } from '../lib/audio'
@@ -9,6 +10,8 @@ import { wakeLock } from '../lib/wakelock'
 import { loadLicence } from '../lib/license'
 import { useT, type Language } from '../i18n'
 import type { Settings } from '../lib/storage'
+import type { Account } from '../lib/session'
+import type { SyncStatus } from '../lib/sync'
 import './SettingsScreen.css'
 
 /**
@@ -31,9 +34,17 @@ interface Props {
   onReset: () => void
   onBack: () => void
   onOpenLegal: (page: 'privacy' | 'terms' | 'disclaimer') => void
+  /** So com o login ligado: a conta e as acoes dela. */
+  account?: {
+    user: Account
+    sync: SyncStatus
+    onRename: (name: string) => Promise<boolean>
+    onSignOut: () => void
+    onDelete: () => Promise<boolean>
+  }
 }
 
-export function SettingsScreen({ settings, onChange, onReset, onBack, onOpenLegal }: Props) {
+export function SettingsScreen({ settings, onChange, onReset, onBack, onOpenLegal, account }: Props) {
   const t = useT()
   const [confirmingReset, setConfirmingReset] = useState(false)
   const licence = loadLicence()
@@ -50,6 +61,8 @@ export function SettingsScreen({ settings, onChange, onReset, onBack, onOpenLega
       </header>
 
       <div className="screen__body">
+        {account && <AccountCard {...account} />}
+
         <section className="card settings__group">
           <h2 className="settings__group-title">{t.settings.duringWorkout}</h2>
 
@@ -176,7 +189,9 @@ export function SettingsScreen({ settings, onChange, onReset, onBack, onOpenLega
 
         <section className="card settings__group">
           <h2 className="settings__group-title">{t.settings.progressTitle}</h2>
-          <p className="settings__group-hint">{t.settings.progressHint}</p>
+          <p className="settings__group-hint">
+            {account ? t.settings.progressHintAccount : t.settings.progressHint}
+          </p>
 
           {confirmingReset ? (
             <div className="settings__confirm">
@@ -210,7 +225,7 @@ export function SettingsScreen({ settings, onChange, onReset, onBack, onOpenLega
           Lido direto do armazenamento — é informação de exibição, não vale
           atravessar o app inteiro em propriedades por causa dela.
         */}
-        {licence && (
+        {licence && !account && (
           <section className="card settings__group">
             <h2 className="settings__group-title">{t.settings.accessTitle}</h2>
             <p className="settings__access-code">{t.settings.accessCode(licence.code)}</p>

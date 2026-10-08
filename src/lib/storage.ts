@@ -1,9 +1,10 @@
 /**
  * Progresso e preferências, em localStorage.
  *
- * Não há conta nem servidor: o escopo fechado é explícito quanto a isso. O
- * progresso vive no aparelho — o que também mantém o app fora do alcance da
- * CCPA, já que nenhum dado pessoal é coletado ou enviado.
+ * O aparelho é sempre a cópia de trabalho: o treino lê e grava aqui, com ou
+ * sem internet. Com o login ligado (VITE_LOGIN=true), src/lib/sync.ts copia o
+ * progresso para a conta e junta com o de outros aparelhos; sem login, ele
+ * nunca sai do aparelho.
  *
  * Toda leitura é defensiva: localStorage lança em aba privada de alguns
  * navegadores e pode voltar com lixo se a usuária trocar de versão do app.
@@ -56,6 +57,12 @@ export interface ActiveSession {
 }
 
 export interface Progress {
+  /**
+   * Sobe a cada "recomeçar o programa". Na sincronização, a era mais nova
+   * vence inteira: sem isto, recomeçar num aparelho seria desfeito pela união
+   * com o progresso do outro. Ver api/_merge.ts.
+   */
+  epoch: number
   /** Chaves "semana-dia-tipo", ex.: "1-1-strength". Um treino concluído cada. */
   completedWorkouts: string[]
   /** Data ISO (YYYY-MM-DD) de cada dia concluído, para acompanhar a constância. */
@@ -65,6 +72,8 @@ export interface Progress {
   /** Sessão interrompida, se houver. */
   activeSession: ActiveSession | null
   settings: Settings
+  /** Quando os ajustes mudaram por ação da usuária. 0 = nunca mexeu. */
+  settingsUpdatedAt: number
 }
 
 /** Depois disso, retomar não faz sentido: é outro dia, outro treino. */
@@ -80,12 +89,16 @@ export const DEFAULT_SETTINGS: Settings = {
 }
 
 const EMPTY: Progress = {
+  epoch: 0,
   completedWorkouts: [],
   dayCompletedAt: {},
   introRead: false,
   activeSession: null,
   settings: DEFAULT_SETTINGS,
+  settingsUpdatedAt: 0,
 }
+
+export const emptyProgress = (): Progress => ({ ...EMPTY })
 
 export const workoutKey = (week: number, day: number, type: string) => `${week}-${day}-${type}`
 export const dayKey = (week: number, day: number) => `${week}-${day}`
@@ -96,6 +109,7 @@ export function load(): Progress {
     if (!raw) return { ...EMPTY }
     const parsed = JSON.parse(raw) as Partial<Progress>
     return {
+      epoch: typeof parsed.epoch === 'number' ? parsed.epoch : 0,
       completedWorkouts: Array.isArray(parsed.completedWorkouts) ? parsed.completedWorkouts : [],
       dayCompletedAt:
         parsed.dayCompletedAt && typeof parsed.dayCompletedAt === 'object'
@@ -106,6 +120,7 @@ export function load(): Progress {
       // Espalhar sobre os padrões: uma preferência nova em versão futura não
       // chega indefinida para quem já tinha dados salvos.
       settings: migrate({ ...DEFAULT_SETTINGS, ...(parsed.settings ?? {}) }),
+      settingsUpdatedAt: typeof parsed.settingsUpdatedAt === 'number' ? parsed.settingsUpdatedAt : 0,
     }
   } catch {
     return { ...EMPTY }

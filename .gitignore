@@ -30,3 +30,6 @@ ebook/manual.pdf
 
 .vercel
 .env*
+
+# Build da verificacao do login (scripts/verify-auth.mjs)
+dist-auth-test

@@ -1,0 +1,81 @@
+/* Tela de login. Herda a pagina da tela de acesso (GateScreen.css) e so
+   acrescenta o que e dela: o espaco do Google, o divisor e o campo do codigo. */
+
+.login__google {
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
+  /* Altura do botao do Google: o espaco fica reservado enquanto o script
+     carrega, para o formulario abaixo nao pular. */
+  min-height: 44px;
+}
+
+.login__google--loading {
+  opacity: 0;
+}
+
+.login__divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+  color: var(--ink-faint);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.login__divider::before,
+.login__divider::after {
+  content: '';
+  flex: 1;
+  border-top: 1px solid var(--line);
+}
+
+.login__form {
+  text-align: left;
+}
+
+.login__label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--ink-muted);
+}
+
+/* Seis digitos grandes e afastados: conferidos de olho contra o e-mail. */
+.login__code {
+  font-size: 1.6rem;
+  letter-spacing: 0.4em;
+  /* Compensa o espaco que o ultimo digito deixa a direita. */
+  padding-left: calc(16px + 0.4em);
+}
+
+.login__notice {
+  margin-top: 10px;
+  font-size: 0.86rem;
+  color: var(--teal-deep);
+  text-align: center;
+}
+
+.login__links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin-top: 16px;
+}
+
+.login__privacy {
+  margin-top: 28px;
+  padding: 8px;
+  background: none;
+  border: 0;
+  font: inherit;
+  font-size: 0.8rem;
+  color: var(--ink-faint);
+  text-decoration: underline;
+  cursor: pointer;
+}

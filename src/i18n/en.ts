@@ -36,6 +36,8 @@ export const en = {
     resumeCta: 'Pick up where you left off',
     resumeDiscard: 'Start the day over',
     savedHere: 'Saved on this phone. No account, no password.',
+    savedAccount: 'Saved to your account. Sign in on any phone and pick up where you left off.',
+    greeting: (name: string) => `Welcome back, ${name}`,
     sequenceNote:
       'Weeks unlock in order. Each one builds on the last: first you learn the movement lying down, then you carry it into sitting and standing.',
   },
@@ -183,6 +185,8 @@ export const en = {
     progressTitle: 'Progress',
     progressHint:
       'Your progress is saved on this device. There is no account and no password, and nothing leaves your phone.',
+    progressHintAccount:
+      'Your progress is saved to your account and shared between your devices. Restarting the program here restarts it on every device.',
     restart: 'Restart the program',
     confirmRestart: 'Erase your progress and go back to week 1?',
     erase: 'Erase',
@@ -232,6 +236,7 @@ export const en = {
       offline: 'No internet connection. Unlocking needs to happen online, just this once.',
       store_unavailable: 'The activation service is temporarily unavailable. Please try again in a few minutes.',
       server_error: 'Something went wrong on our side. Please try again in a moment.',
+      login_required: 'Please sign in to your account again.',
     },
   },
 
@@ -245,7 +250,71 @@ export const en = {
     retry: 'Try again',
     retrying: 'Checking…',
     another: 'Use a different code',
+    signOut: 'Sign out',
     stillOffline: 'Still no connection. Check your internet and try once more.',
+  },
+
+  auth: {
+    eyebrow: 'Your account',
+    title: 'Sign in to start training',
+    lede: 'Use the e-mail from your purchase. Your progress is saved to your account, so you never lose it, not even on a new phone.',
+    or: 'or',
+    emailLabel: 'Purchase e-mail',
+    emailPlaceholder: 'you@example.com',
+    sendCode: 'Send me a code',
+    sending: 'Sending…',
+    codeTitle: 'Check your e-mail',
+    codeLede: (email: string) =>
+      `If ${email} is the address from your purchase, a 6-digit code is on its way. It expires in 10 minutes.`,
+    codeLabel: 'Sign-in code',
+    verify: 'Sign in',
+    verifying: 'Checking…',
+    resend: 'Send a new code',
+    resendIn: (seconds: number) => `Send a new code in ${seconds}s`,
+    resent: 'New code sent.',
+    changeEmail: 'Use a different e-mail',
+    noCode: "No code? Check your spam folder, and make sure it's the address on your purchase receipt.",
+    linkTitle: 'One more step',
+    linkLede: (googleEmail: string) =>
+      `${googleEmail} is not linked to a purchase yet. Enter the e-mail you used at checkout and we will connect the two. You only do this once.`,
+    privacy: 'Privacy Policy',
+    errors: {
+      bad_email: 'That does not look like a complete e-mail address.',
+      bad_code: 'That code is not right. Check the most recent e-mail and try again.',
+      expired: 'This code has expired. Ask for a new one.',
+      too_many: 'Too many attempts. Ask for a new code.',
+      rate_limited: 'Too many codes requested. Wait a few minutes and try again.',
+      revoked: 'This purchase is no longer active. If you believe this is a mistake, reply to your purchase e-mail.',
+      device_limit:
+        'Your access is already in use on three devices, which is the limit. Reply to your purchase e-mail and we can free one up.',
+      google_failed: 'Google sign-in did not work. Try again, or use your e-mail instead.',
+      no_purchase: 'This Google account is not linked to a purchase.',
+      offline: 'No internet connection. Signing in needs to happen online.',
+      store_unavailable: 'Sign-in is temporarily unavailable. Please try again in a few minutes.',
+      server_error: 'Something went wrong on our side. Please try again in a moment.',
+    },
+  },
+
+  account: {
+    title: 'Your account',
+    nameLabel: 'Name',
+    namePlaceholder: 'Your first name',
+    save: 'Save',
+    saved: 'Saved',
+    saveFailed: 'Could not save. Check your connection.',
+    emailLabel: 'E-mail',
+    synced: 'Your progress is saved to your account.',
+    syncing: 'Saving to your account…',
+    pending: 'Changes will be saved to your account when you are back online.',
+    signOut: 'Sign out',
+    signOutHint: 'Your progress stays in your account. Signing out only removes it from this phone.',
+    deleteTitle: 'Delete my account',
+    deleteHint:
+      'Erases your profile and saved progress for good. Your purchase is not affected, and you can sign in again later and start fresh.',
+    deleteConfirm: 'Delete your account and saved progress? This cannot be undone.',
+    deleteYes: 'Delete for good',
+    deleteFailed: 'Could not delete right now. Check your connection and try again.',
+    cancel: 'Cancel',
   },
 
   ebook: {
@@ -300,6 +369,55 @@ export const en = {
             h: 'Your choices',
             ps: [
               'You can ask us to delete the activation record linked to your purchase at any time by writing to squeezemethod@gmail.com. Deleting it disables the app on your devices.',
+            ],
+          },
+          {
+            h: 'Changes',
+            ps: [
+              'We may update this policy as the product evolves. The date above always reflects the current version.',
+            ],
+          },
+        ],
+      },
+      privacyAccount: {
+        title: 'Privacy Policy',
+        sections: [
+          {
+            h: 'What this policy covers',
+            ps: [
+              'This policy explains what information The Squeeze Method (femivita.online) handles when you use the app and the ebook, and how you stay in control of it.',
+            ],
+          },
+          {
+            h: 'Your account',
+            ps: [
+              'To sign in, you use the e-mail from your purchase. If you choose Google, we receive your name, e-mail address and profile photo from your Google account. We never see your Google password.',
+              'Your account keeps that e-mail, the name you choose to show, and your training progress: which workouts you completed, on which days, and your app settings. It also keeps an anonymous identifier for each device you sign in on (up to three).',
+            ],
+          },
+          {
+            h: 'Sign-in codes',
+            ps: [
+              'When you sign in with your e-mail, we send you a one-time code through our e-mail provider. The code expires in 10 minutes and is stored only in scrambled form, never as the code itself.',
+            ],
+          },
+          {
+            h: 'What we do not do',
+            ps: [
+              'We do not ask for, and do not store, any health information. Your progress record only says which workouts you finished and when.',
+              'The app has no ads, no analytics and no trackers. We do not collect your location, and we do not sell or share personal information with anyone.',
+            ],
+          },
+          {
+            h: 'Purchases',
+            ps: [
+              'Payments are processed by Hotmart, the platform where you bought the product, under its own privacy policy. We receive only what is needed to grant access: the e-mail linked to your purchase, and refund notifications.',
+            ],
+          },
+          {
+            h: 'Your choices',
+            ps: [
+              'You can delete your account at any time in Settings, under Your account. That erases your profile and saved progress immediately. You can also write to squeezemethod@gmail.com and we will do it for you.',
             ],
           },
           {

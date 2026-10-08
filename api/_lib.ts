@@ -195,6 +195,9 @@ async function redis<T>(...cmd: (string | number)[]): Promise<T> {
   return STORE_URL && STORE_TOKEN ? viaRest<T>(texto) : viaTcp<T>(texto)
 }
 
+/** O mesmo canal, para as rotas de conta (api/_auth.ts). */
+export const kv = redis
+
 export type CodeStatus = 'unused' | 'active' | 'revoked'
 
 export interface CodeRecord {

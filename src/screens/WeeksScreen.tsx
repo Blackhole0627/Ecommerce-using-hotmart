@@ -36,6 +36,8 @@ interface Props {
   onOpenDay: (week: number, day: number) => void
   onOpenSettings: () => void
   onOpenEbook: () => void
+  /** Com login: a conta. Troca o "guardado neste celular" e cumprimenta pelo nome. */
+  account?: { name: string }
 }
 
 export function WeeksScreen({
@@ -52,8 +54,10 @@ export function WeeksScreen({
   onOpenDay,
   onOpenSettings,
   onOpenEbook,
+  account,
 }: Props) {
   const t = useT()
+  const savedText = account ? t.home.savedAccount : t.home.savedHere
 
   return (
     <div className="screen weeks">
@@ -76,6 +80,7 @@ export function WeeksScreen({
         <button className="icon-btn" onClick={onOpenSettings} aria-label={t.common.settings}>
           <IconSettings />
         </button>
+        {account?.name && <p className="weeks__greeting">{t.home.greeting(account.name)}</p>}
       </header>
 
       {/*
@@ -109,7 +114,7 @@ export function WeeksScreen({
                   ],
                 )}
               </span>
-              <span className="resume__saved">{t.home.savedHere}</span>
+              <span className="resume__saved">{savedText}</span>
             </div>
             <div className="resume__actions">
               <button className="btn btn--primary resume__go" onClick={onResume}>
@@ -170,7 +175,7 @@ export function WeeksScreen({
               onde o progresso aparece, e não só enterrada em Ajustes — mas
               não duas vezes na mesma tela: com o treino interrompido em cima,
               a faixa de retomar já respondeu. */}
-          {!resumable && <p className="weeks__progress-saved">{t.home.savedHere}</p>}
+          {!resumable && <p className="weeks__progress-saved">{savedText}</p>}
         </section>
 
         {/*

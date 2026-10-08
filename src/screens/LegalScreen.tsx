@@ -1,5 +1,6 @@
 import { IconArrowLeft } from '../components/icons'
 import { useT } from '../i18n'
+import { LOGIN_ENABLED } from '../lib/session'
 import './LegalScreen.css'
 
 export type LegalPage = 'privacy' | 'terms' | 'disclaimer'
@@ -19,7 +20,8 @@ interface Props {
  */
 export function LegalScreen({ page, onBack }: Props) {
   const t = useT()
-  const doc = t.legal.pages[page]
+  // Com conta, a politica de privacidade e outra: descreve o que a conta guarda.
+  const doc = t.legal.pages[page === 'privacy' && LOGIN_ENABLED ? 'privacyAccount' : page]
 
   return (
     <div className="screen legal">

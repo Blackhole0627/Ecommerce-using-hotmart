@@ -20,6 +20,16 @@
  * usuaria se trancaria para fora ao zerar o proprio treino.
  */
 import { LICENSE_PUBLIC_JWK } from './license-key'
+import { authHeader, LOGIN_ENABLED } from './session'
+
+/**
+ * A chave publica de verdade vem de license-key.ts. A variavel de ambiente so
+ * existe para a verificacao automatica (scripts/verify-auth.mjs), que assina
+ * com uma chave descartavel e nao precisa da chave privada de producao.
+ */
+const PUBLIC_JWK: JsonWebKey = import.meta.env.VITE_LICENSE_PUBLIC_JWK
+  ? (JSON.parse(import.meta.env.VITE_LICENSE_PUBLIC_JWK) as JsonWebKey)
+  : LICENSE_PUBLIC_JWK
 
 const LIC_KEY = 'kegel-pelvic:lic'
 const DEVICE_KEY = 'kegel-pelvic:device'
@@ -39,7 +49,7 @@ const DEVICE_KEY = 'kegel-pelvic:device'
  * Enquanto estiver desligada o app abre para qualquer pessoa, como era antes.
  * Religar e trocar a variavel e publicar de novo.
  */
-export const LICENSE_REQUIRED = import.meta.env.VITE_REQUIRE_LICENSE !== 'false'
+export const LICENSE_REQUIRED = import.meta.env.VITE_REQUIRE_LICENSE !== 'false' || LOGIN_ENABLED
 
 /** Renova em segundo plano quando falta menos que isto. */
 const RENEW_BEFORE_MS = 3 * 24 * 60 * 60 * 1000
@@ -73,6 +83,8 @@ export type ActivateError =
   | 'store_unavailable'
   | 'offline'
   | 'server_error'
+  /** Login ligado e sessao ausente ou vencida: a conta precisa entrar de novo. */
+  | 'login_required'
 
 /* --------------------------------------------------------------------------
    Aparelho
@@ -142,7 +154,7 @@ let keyPromise: Promise<CryptoKey> | null = null
 const publicKey = (): Promise<CryptoKey> => {
   keyPromise ??= crypto.subtle.importKey(
     'jwk',
-    LICENSE_PUBLIC_JWK,
+    PUBLIC_JWK,
     { name: 'ECDSA', namedCurve: 'P-256' },
     false,
     ['verify'],
@@ -245,7 +257,8 @@ async function ask(path: string, code: string): Promise<Answer> {
   try {
     response = await fetch(path, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      // Com o login ligado, o servidor so ativa um e-mail com a sessao dele.
+      headers: { 'Content-Type': 'application/json', ...authHeader() },
       // O service worker nao pode responder isto do cache — um 200 guardado
       // faria a revoga cao falhar em silencio. Ver o denylist em vite.config.ts.
       cache: 'no-store',
@@ -279,6 +292,16 @@ async function ask(path: string, code: string): Promise<Answer> {
       seenAt: Date.now(),
     },
   }
+}
+
+/**
+ * Confere um bilhete recebido de outra rota (o login) e o transforma em
+ * licenca. Mesma conferencia de sempre: assinatura e aparelho.
+ */
+export async function licenceFromToken(token: string, code: string): Promise<Licence | null> {
+  const claims = await verify(token)
+  if (!claims) return null
+  return { token, code: code || claims.c, expiresAt: claims.exp * 1000, seenAt: Date.now() }
 }
 
 /** Primeira ativacao: registra o aparelho e devolve a licenca. */

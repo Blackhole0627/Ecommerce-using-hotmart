@@ -1,0 +1,124 @@
+.account__who {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 4px;
+}
+
+.account__avatar {
+  flex: none;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Sem foto: a inicial, no verde da marca. */
+.account__avatar--initial {
+  display: grid;
+  place-items: center;
+  background: var(--teal-wash);
+  color: var(--teal-deep);
+  font-size: 1.3rem;
+  font-weight: 800;
+}
+
+.account__ids {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.account__name {
+  font-size: 1.02rem;
+}
+
+/* E-mail longo quebra em vez de vazar o card. */
+.account__email {
+  font-size: 0.86rem;
+  color: var(--ink-muted);
+  overflow-wrap: anywhere;
+}
+
+.account__sync {
+  margin-top: 12px;
+  font-size: 0.82rem;
+  color: var(--teal-deep);
+}
+
+.account__sync--pending {
+  color: var(--coral-deep);
+}
+
+.account__label {
+  display: block;
+  margin-top: 16px;
+  margin-bottom: 6px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--ink-muted);
+}
+
+.account__rename {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.account__input {
+  flex: 1;
+  min-width: 0;
+  height: 52px;
+  padding: 0 14px;
+  border: 2px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--ink);
+  font: inherit;
+  /* 16px: abaixo disto o Safari do iPhone da zoom ao focar. */
+  font-size: 1rem;
+}
+
+.account__input:focus-visible {
+  outline: none;
+  border-color: var(--teal);
+}
+
+/* Tres nomes de classe de proposito: .btn (tema) e .settings__group
+   .btn--ghost (Ajustes, que poe margem em cima de todo botao do grupo)
+   ganhariam de um seletor mais simples. */
+.account .account__rename .account__save {
+  margin-top: 0;
+  /* .btn e largura total e 56px de altura; aqui ele divide a linha com o
+     campo, entao fica do tamanho do texto e da altura do campo. */
+  flex: none;
+  width: auto;
+  min-width: 88px;
+  height: 52px;
+  min-height: 0;
+  padding: 0 18px;
+}
+
+.account__error {
+  margin-top: 8px;
+  font-size: 0.82rem;
+  color: var(--coral-deep);
+}
+
+.account__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
+.account__delete {
+  margin-top: 6px;
+  color: var(--coral-deep);
+}
+
+.account__danger {
+  background: var(--coral-deep);
+}

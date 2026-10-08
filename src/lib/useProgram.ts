@@ -144,18 +144,34 @@ export function useProgram() {
   }, [])
 
   const updateSettings = useCallback((patch: Partial<Settings>) => {
-    setProgress((prev) => ({ ...prev, settings: { ...prev.settings, ...patch } }))
+    setProgress((prev) => ({
+      ...prev,
+      settings: { ...prev.settings, ...patch },
+      settingsUpdatedAt: Date.now(),
+    }))
   }, [])
 
+  /**
+   * Recomeçar sobe a era em vez de só esvaziar: com a conta, é a era nova que
+   * faz os outros aparelhos também recomeçarem, em vez de devolverem o
+   * progresso antigo na próxima sincronização.
+   */
   const resetAll = useCallback(() => {
     resetStorage()
-    setProgress({
+    setProgress((prev) => ({
+      epoch: prev.epoch + 1,
       completedWorkouts: [],
       dayCompletedAt: {},
       introRead: false,
       activeSession: null,
       settings: DEFAULT_SETTINGS,
-    })
+      settingsUpdatedAt: Date.now(),
+    }))
+  }, [])
+
+  /** A sincronização com a conta troca o progresso pelo já juntado. */
+  const replaceProgress = useCallback((next: Progress) => {
+    setProgress((prev) => (JSON.stringify(prev) === JSON.stringify(next) ? prev : next))
   }, [])
 
   const doneWeeks = weeks.filter((w) => w.status === 'done').length
@@ -239,6 +255,8 @@ export function useProgram() {
   )
 
   return {
+    progress,
+    replaceProgress,
     stepsFrom,
     weeks,
     daysPerWeek,

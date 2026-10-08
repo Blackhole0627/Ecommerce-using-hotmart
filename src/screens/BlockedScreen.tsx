@@ -21,9 +21,11 @@ interface Props {
   busy: boolean
   /** Uma tentativa ja falhou por falta de rede: vale dizer isso. */
   stillOffline: boolean
+  /** Texto do botao de saida. Com login, e "sair da conta", nao "outro codigo". */
+  anotherLabel?: string
 }
 
-export function BlockedScreen({ reason, onRetry, onUseAnother, busy, stillOffline }: Props) {
+export function BlockedScreen({ reason, onRetry, onUseAnother, busy, stillOffline, anotherLabel }: Props) {
   const t = useT()
   const expired = reason === 'expired'
 
@@ -55,7 +57,7 @@ export function BlockedScreen({ reason, onRetry, onUseAnother, busy, stillOfflin
         )}
 
         <button className="btn btn--quiet gate__another" onClick={onUseAnother}>
-          {t.blocked.another}
+          {anotherLabel ?? t.blocked.another}
         </button>
       </div>
     </div>
